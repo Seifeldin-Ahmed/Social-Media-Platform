@@ -37,7 +37,14 @@ router.patch('/reset',
     authController.forgetPassword
 );
 
+router.post('/verify',
+    body('email').isEmail().withMessage('please enter a valid email.').normalizeEmail(),
+    body('resetCode').trim().not().isEmpty(),
+    authController.verifyCode
+);
+
 router.post('/set-new-password',
+    body('email').isEmail().withMessage('please enter a valid email.').normalizeEmail(),
     body('password').trim().isLength({min: 7}).matches(/[A-Z]/).withMessage('at least one uppercase letter required').matches(/\d/).withMessage('at least one number required'),
     body('confirmPassword').custom((value, {req}) => {
         if(value !== req.body.password){
@@ -45,7 +52,6 @@ router.post('/set-new-password',
         }
         return true;
     }).trim(),
-    body('resetCode').trim().not().isEmpty(),
     authController.setNewPassword
 );
 

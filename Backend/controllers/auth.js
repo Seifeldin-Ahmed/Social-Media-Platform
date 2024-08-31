@@ -72,8 +72,8 @@ exports.login = async (req, res, next) =>{
             error.statusCode = 401; // not authenticated
             throw error;
         }
-        const token = jwt.sign({email: user.email, userId: user._id.toString()}, 'strongsupersupersecretsecret', {expiresIn: '2h'});
-        res.status(200).json({token: token, userId: user._id.toString()}); 
+        const token = jwt.sign({email: user.email, userId: user._id.toString()}, 'strongsupersupersecretsecret');
+        res.status(200).json({message: 'login successfully', token: token, userId: user._id.toString()}); 
     } 
     catch(err){
         if(!err.statusCode){
@@ -156,6 +156,38 @@ exports.forgetPassword = (req, res, next) => {
     });
 };
 
+exports.verifyCode = async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        const error = new Error('Validation failed.');
+        error.statusCode = 422;
+        error.data = errors.array(); //keep errors to send it back to the frontend
+        throw error;
+    }
+    const resetCode = req.body.resetCode;
+    try{
+        const user = await User.findOne({email: req.body.email});
+        if(!user){
+            const error = new Error('user not found');
+            error.statusCode = 404;
+            throw error;
+        }
+        const isEqual = await bcrypt.compare(resetCode, user.resetCode);
+        if (!isEqual || user.resetCodeExpiration <= Date.now()) {
+            const error = new Error('Code expired or invalid.');
+            error.statusCode = 404;
+            throw error;
+        }
+        res.status(200).json({message:'valid code', userId: result._id.toString()}); 
+    }
+    catch(err){
+        if(!err.statusCode){
+            err.statusCode = 500 ; 
+        }
+        next(err);
+    }
+};
+
 exports.setNewPassword = async (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -165,18 +197,10 @@ exports.setNewPassword = async (req, res, next) => {
         throw error;
     }
     const password = req.body.password;
-    const userId = req.body.userId;
-    const resetCode = req.body.resetCode;
     try{
-        const user = await User.findOne({_id: userId});
+        const user = await User.findOne({email: req.body.email});
         if(!user){
-            const error = new Error('code expired');
-            error.statusCode = 404;
-            throw error;
-        }
-        const isEqual = await bcrypt.compare(resetCode, user.resetCode);
-        if (!isEqual || user.resetCodeExpiration <= Date.now()) {
-            const error = new Error('Code expired or invalid.');
+            const error = new Error('user not found');
             error.statusCode = 404;
             throw error;
         }
