@@ -1,3 +1,4 @@
+
 # Logs
 Frontend/logs
 Frontend/*.log
@@ -20,3 +21,5 @@ Frontend/*.ntvs*
 Frontend/*.njsproj
 Frontend/*.sln
 Frontend/*.sw?
+Backend/package-lock.json
+Backend/node_modules
