@@ -24,8 +24,7 @@ const fileFilter = (req, file, cb) =>{
         cb(null, false);
     }
 };
-
-const MONGODB_URL = 'mongodb+srv://SeifAhmed:seif9517535@cluster0.agaemyt.mongodb.net/socialmedia?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URL = 'mongodb+srv://ApplicationService:2e0OXZRyr7I5b0Jp@cluster0.km4ct.mongodb.net/socialmedia?retryWrites=true&w=majority&appName=Cluster0';
 
 app.use(bodyParser.json());
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
@@ -51,5 +50,6 @@ app.use((error, req, res, next) => {
 mongoose.connect(MONGODB_URL)
 .then(() => {
     app.listen(4000);
+    console.log("connected..");
 })
 .catch(err => console.log(err));
