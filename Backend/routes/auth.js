@@ -20,7 +20,7 @@ router.put('/signup',
         }
         return true;
     }).trim(),
-    body('fistName').trim().not().isEmpty().isLength({min:3}),
+    body('firstName').trim().not().isEmpty().isLength({min:3}),
     body('lastName').trim().not().isEmpty().isLength({min:3}),
     body('gender').trim().not().isEmpty(),
     body('dateOfBirth').not().isEmpty().isDate().withMessage('Invalid date format. Please enter a valid date (YYYY-MM-DD).'),
