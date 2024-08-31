@@ -14,14 +14,39 @@ router.put('/signup',
                });
     }).normalizeEmail(),
     body('password').trim().isLength({min: 7}).matches(/[A-Z]/).withMessage('at least one uppercase letter required').matches(/\d/).withMessage('at least one number required'),
+    body('confirmPassword').custom((value, {req}) => {
+        if(value !== req.body.password){
+            throw new Error('Passwords have to match!');
+        }
+        return true;
+    }).trim(),
     body('fistName').trim().not().isEmpty().isLength({min:3}),
     body('lastName').trim().not().isEmpty().isLength({min:3}),
     body('gender').trim().not().isEmpty(),
     body('dateOfBirth').not().isEmpty().isDate().withMessage('Invalid date format. Please enter a valid date (YYYY-MM-DD).'),
-    authController.signup);
+    authController.signup
+);
 
 router.post('/login',
     body('email').isEmail().withMessage('please enter a valid email.').normalizeEmail(),
-    authController.login);
+    authController.login
+);
+
+router.patch('/reset',
+    body('email').isEmail().withMessage('please enter a valid email.').normalizeEmail(),
+    authController.forgetPassword
+);
+
+router.post('/set-new-password',
+    body('password').trim().isLength({min: 7}).matches(/[A-Z]/).withMessage('at least one uppercase letter required').matches(/\d/).withMessage('at least one number required'),
+    body('confirmPassword').custom((value, {req}) => {
+        if(value !== req.body.password){
+            throw new Error('Passwords have to match!');
+        }
+        return true;
+    }).trim(),
+    body('resetCode').trim().not().isEmpty(),
+    authController.setNewPassword
+);
 
 module.exports = router;
