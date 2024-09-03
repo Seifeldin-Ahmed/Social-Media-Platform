@@ -11,7 +11,6 @@ const userSchema = new Schema({
     ProfilePic: {type: String, required: true},
     resetCode: String,
     resetCodeExpiration: Date,
-    posts: [{type: Schema.Types.ObjectId, required: true, ref: 'Post'}],
     followers: [{type: Schema.Types.ObjectId, required: true, ref: 'User'}],
     following: [{type: Schema.Types.ObjectId, required: true, ref: 'User'}],
 });
