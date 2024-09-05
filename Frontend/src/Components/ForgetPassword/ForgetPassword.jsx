@@ -40,15 +40,14 @@ const ForgetPassword = () => {
             <div className="container mx-auto h-full">
                 <div className="w-full lg:w-[50%] flex items-center !justify-center  lg:justify-start   h-full">
                     <form onSubmit={formik.handleSubmit} className="w-[90%] flex flex-col justify-center items-center bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
-                        <h1 className=" text-center py-5 mx-auto text-3xl text-blue-800">
-                            Welcome to
+                        <h1 className=" text-center mx-auto text-3xl text-blue-800">
                             <span className='inline-block' >
                                 <span className={`${stlye.logo} h-[10vh] inline-block align-middle max-[400px]: `}></span>onnectify
                             </span>
                         </h1>
                         {/* <!-- Email --> */}
                         <div className="mb-5 w-full ">
-                            <label className="block text-2xl font-medium text-blue-800">
+                            <label className="block mb-5 text-2xl font-medium text-blue-800">
                                 Forgot Your Password?
                             </label>
                             <div className="block mb-2 text-sm font-medium text-blue-900">If you've forgotten your password, no worries! Just enter your email address below, and we’ll send you a verification code to help you reset it.</div>

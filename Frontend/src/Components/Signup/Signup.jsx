@@ -78,12 +78,12 @@ const Signup = () => {
             <div className="container mx-auto sm:h-full">
                 <div className="sm:w-full md:w-full lg:w-[50%] h-full flex items-center justify-center lg:justify-start">
                     <form onSubmit={formik.handleSubmit} className="w-[90%] flex flex-wrap justify-between bg-[#ffffff] shadow-2xl drop-shadow-xl p-5 rounded-lg">
-                            <h1 className=" text-center py-5 mx-auto text-3xl text-blue-800">
-                                Welcome to
-                                <span className='inline-block' >
-                                    <span className={`${stlye.logo} h-[10vh] inline-block align-middle  `}></span>onnectify
-                                </span>
-                            </h1>
+                        <h1 className=" text-center w-full py-5 mx-auto text-3xl text-blue-800">
+                            Welcome to
+                            <span className='inline-block' >
+                                <span className={`${stlye.logo} h-[10vh] inline-block align-middle  `}></span>onnectify
+                            </span>
+                        </h1>
                         {/* First Name */}
                         <div className="mb-5 w-[45%]">
                             <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-blue-800">
