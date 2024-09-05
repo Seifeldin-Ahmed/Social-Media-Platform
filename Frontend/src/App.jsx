@@ -7,6 +7,11 @@ import Home from './Components/Home/Home'
 import Layout from './Components/Layout/Layout'
 import Signup from './Components/Signup/Signup'
 import Signin from './Components/Signin/Signin'
+import AuthContextProvider from './context/AuthContext'
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
+import ForgetPassword from './Components/ForgetPassword/ForgetPassword'
+import VerifyCode from './Components/VerifyCode/VerifyCode'
+import NewPassword from './Components/NewPassword/NewPassword'
 
 function App() {
   const router = createBrowserRouter([
@@ -15,7 +20,7 @@ function App() {
       element: <Layout />,
       children: [
         {
-          index: true, element: <Home />
+          index: true, element: <ProtectedRoute> <Home /></ProtectedRoute>
         },
         {
           path: '/signup'
@@ -24,12 +29,27 @@ function App() {
         {
           path: '/signin'
           , element: <Signin />
+        },
+        {
+          path: '/forgetpassword'
+          , element: <ForgetPassword />
+
+        }, {
+          path: '/verifycode'
+          , element: <VerifyCode />
+
+        }, {
+          path: '/newpassword'
+          , element: <NewPassword />
+
         }
       ]
     }
   ])
   return (
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   )
 }
 

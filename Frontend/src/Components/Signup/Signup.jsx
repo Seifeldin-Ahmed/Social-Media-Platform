@@ -2,8 +2,11 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
-
+import { useNavigate, Link } from 'react-router-dom';
+import img from "../../../public/images//bg_img.jpg"
+import stlye from "./Signup.module.css"
 const Signup = () => {
+    const naviagte = useNavigate()
     const formData = new FormData()
     const user = {
         firstName: '',
@@ -29,10 +32,10 @@ const Signup = () => {
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
         }
-
-
         try {
             const { data } = await axios.put('http://localhost:4000/signup', formData);
+            console.log(data)
+            naviagte('/login')
         } catch (error) {
             console.log(error);
         }
@@ -57,8 +60,13 @@ const Signup = () => {
             .required('Please confirm your password'),
         gender: Yup.string().required('Gender is required'),
         dateOfBirth: Yup.date().required('Date of Birth is required'),
-        image: Yup.mixed() // Optional field
-    })
+        image: Yup.mixed()
+            .notRequired() // Makes the image field optional
+            .test('fileType', 'Unsupported file format', (value) => {
+                return !value || (value && ['image/jpeg', 'image/png', 'image/gif'].includes(value.type));
+            })
+    });
+
     const formik = useFormik({
         initialValues: user,
         validationSchema: validationSchema,
@@ -66,111 +74,131 @@ const Signup = () => {
     });
 
     return (
-        <section className='w-[40%] mx-auto'>
-            <form onSubmit={formik.handleSubmit} className="w-full flex flex-row justify-between flex-wrap">
-                {/* First Name */}
-                <div className="mb-5 w-[45%]">
-                    <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        First Name
-                    </label>
-                    <input type="text" id="firstName" value={formik.values.firstName} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="First Name"
-                    />
-                    {formik.touched.firstName && formik.errors.firstName ? <div className="text-red-600">{formik.errors.firstName}</div> : null}
-                </div>
-                {/* Last Name */}
-                <div className="mb-5 w-[45%]">
-                    <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Last Name
-                    </label>
-                    <input type="text" id="lastName" value={formik.values.lastName} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Last Name"
-                    />
-                    {formik.touched.lastName && formik.errors.lastName ? <div className="text-red-600">{formik.errors.lastName}</div> : null}
-                </div>
-                {/* Email */}
-                <div className="mb-5 w-full">
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Your email
-                    </label>
-                    <input type="email" id="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Email"
-                    />
-                    {formik.touched.email && formik.errors.email ? <div className="text-red-600">{formik.errors.email}</div> : null}
-                </div>
-                {/* Password */}
-                <div className="mb-5 w-full">
-                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Your password
-                    </label>
-                    <input type="password" id="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Your password"
-                    />
-                    {formik.touched.password && formik.errors.password ? <div className="text-red-600">{formik.errors.password}</div> : null}
-                </div>
-                {/* Repeat Password */}
-                <div className="mb-5 w-full">
-                    <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Confirm Password
-                    </label>
-                    <input type="password" id="confirmPassword" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Confirm Password"
-                    />
-                    {formik.touched.repeatPassword && formik.errors.confirmPassword ? <div className="text-red-600">{formik.errors.confirmPassword}</div> : null}
-                </div>
-                {/* Gender */}
-                <div className="mb-5 flex flex-wrap justify-center w-[45%]">
-                    <label className="w-full block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Gender
-                    </label>
-                    <div className="flex w-full justify-evenly">
-                        <div className="flex items-center mb-2">
-                            <input type="radio" id="male" name="gender" value="male" onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                checked={formik.values.gender === 'male'}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                            <label htmlFor="male" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Male</label>
+        <section className={`${stlye.bgimg} h-[100vh] bg-[#fff]` }>
+        <div className="container mx-auto sm:h-full">
+            <div className="flex justify-between h-full">
+                <div className="sm:w-full md:w-full lg:w-[50%] h-full sm:flex sm:items-center">
+                    <form onSubmit={formik.handleSubmit} className="mx-auto w-[70%] flex flex-wrap justify-between bg-[#481a5b] shadow-lg p-5 rounded-lg">
+                        <h1 className="text-center text-3xl py-5 w-full text-[#ba87fe]">Welcome To Connectify</h1>
+
+                        {/* First Name */}
+                        <div className="mb-5 w-[45%]">
+                            <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-white">
+                                First Name
+                            </label>
+                            <input type="text" id="firstName" value={formik.values.firstName} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                placeholder="First Name"
+                            />
+                            {formik.touched.firstName && formik.errors.firstName ? <div className="text-red-500 text-sm mt-1">{formik.errors.firstName}</div> : null}
                         </div>
 
-                        <div className="flex items-center mb-2">
-                            <input type="radio" id="female" name="gender" value="female" onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                checked={formik.values.gender === 'female'}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                            <label htmlFor="female" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Female</label>
+                        {/* Last Name */}
+                        <div className="mb-5 w-[45%]">
+                            <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-white">
+                                Last Name
+                            </label>
+                            <input type="text" id="lastName" value={formik.values.lastName} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                placeholder="Last Name"
+                            />
+                            {formik.touched.lastName && formik.errors.lastName ? <div className="text-red-500 text-sm mt-1">{formik.errors.lastName}</div> : null}
                         </div>
-                    </div>
-                    {formik.touched.gender && formik.errors.gender ? <div className="text-red-600">{formik.errors.gender}</div> : null}
+
+                        {/* Email */}
+                        <div className="mb-5 w-full">
+                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
+                                Your email
+                            </label>
+                            <input type="email" id="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                placeholder="Email"
+                            />
+                            {formik.touched.email && formik.errors.email ? <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div> : null}
+                        </div>
+
+                        {/* Password */}
+                        <div className="mb-5 w-full">
+                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
+                                Your password
+                            </label>
+                            <input type="password" id="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                placeholder="Your password"
+                            />
+                            {formik.touched.password && formik.errors.password ? <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div> : null}
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div className="mb-5 w-full">
+                            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-white">
+                                Confirm Password
+                            </label>
+                            <input type="password" id="confirmPassword" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                placeholder="Confirm Password"
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword ? <div className="text-red-500 text-sm mt-1">{formik.errors.confirmPassword}</div> : null}
+                        </div>
+
+                        {/* Gender */}
+                        <div className="mb-5 flex flex-wrap justify-center w-[45%]">
+                            <label className="w-full block mb-2 text-sm font-medium text-white">Gender</label>
+                            <div className="flex w-full justify-evenly">
+                                <div className="flex items-center mb-2">
+                                    <input type="radio" id="male" name="gender" value="male" onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                        checked={formik.values.gender === 'male'}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="male" className="ml-2 text-sm font-medium text-white">Male</label>
+                                </div>
+                                <div className="flex items-center mb-2">
+                                    <input type="radio" id="female" name="gender" value="female" onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                        checked={formik.values.gender === 'female'}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="female" className="ml-2 text-sm font-medium text-white">Female</label>
+                                </div>
+                            </div>
+                            {formik.touched.gender && formik.errors.gender ? <div className="text-red-500 text-sm mt-1">{formik.errors.gender}</div> : null}
+                        </div>
+
+                        {/* Date of Birth */}
+                        <div className="mb-5 w-[45%]">
+                            <label htmlFor="dateOfBirth" className="block mb-2 text-sm font-medium text-white">
+                                Date of Birth
+                            </label>
+                            <input type="date" id="dateOfBirth" value={formik.values.dateOfBirth} onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            />
+                            {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? <div className="text-red-500 text-sm mt-1">{formik.errors.dateOfBirth}</div> : null}
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="mb-5 w-full">
+                            <label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-white">
+                                Upload Image
+                            </label>
+                            <input type="file" id="image-upload" name="image" accept="image/*"
+                                onChange={(event) => { formik.setFieldValue("image", event.currentTarget.files[0]); }}
+                                className="block w-full text-sm text-white border border-[#16d6ff] rounded-lg cursor-pointer bg-[#481a5b] focus:outline-none"
+                            />
+                            <p className="mt-1 text-sm text-[#ba87fe]">Choose a profile picture (JPEG, PNG, etc.)</p>
+                            {formik.errors.image && <div className="text-red-500 text-sm mt-1">{formik.errors.image}</div>}
+                        </div>
+
+                        {/* Submit Button */}
+                        <button type="submit" className="w-full mb-5 bg-[#4778ff] text-white hover:bg-[#16d6ff] focus:ring-4 focus:outline-none focus:ring-[#ba87fe] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto">
+                            Register new account
+                        </button>
+                        <Link to="/signin" className='text-[#16d6ff] w-full text-center p-5'>You Already Have Account ?</Link>
+                    </form>
                 </div>
-                {/* Date of Birth */}
-                <div className="mb-5 w-[45%]">
-                    <label htmlFor="dateOfBirth" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Date of Birth
-                    </label>
-                    <input type="date" id="dateOfBirth" value={formik.values.dateOfBirth} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                    />
-                    {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? <div className="text-red-600">{formik.errors.dateOfBirth}</div> : null}
-                </div>
-                {/* Image Upload */}
-                <div className="mb-5 w-full">
-                    <label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Upload Image
-                    </label>
-                    <input type="file" id="image-upload" name="image" accept="image/*"
-                        onChange={(event) => formik.setFieldValue('image', event.currentTarget.files[0])}
-                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">Choose a profile picture (JPEG, PNG, etc.)</p>
-                </div>
-                {/* Submit Button */}
-                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Register new account
-                </button>
-            </form>
-        </section>
+                {/* <div className="sm:hidden md:hidden lg:block w-[50%] h-full">
+                        <img src={img} className='w-full h-full ' alt="login" />
+                    </div> */}
+            </div>
+        </div>
+        </section >
+
     );
 }
 
