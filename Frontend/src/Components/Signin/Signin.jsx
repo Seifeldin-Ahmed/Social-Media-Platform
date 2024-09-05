@@ -48,13 +48,13 @@ const Signin = () => {
     return (
         <section className={`${stlye.bgimg} h-[100vh] bg-[#fff]`}>
             <div className="container mx-auto h-full">
-                <div className="flex flex-col lg:flex-row justify-between h-full">
-                    {/* <!-- Left Side: Form --> */}
-                    <div className="w-full lg:w-[50%] flex items-center justify-start h-full">
-                        <form onSubmit={formik.handleSubmit} className="w-[70%] flex flex-col bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
+                    <div className="w-full lg:w-[50%] flex items-center !justify-center  lg:justify-start   h-full">
+                        <form onSubmit={formik.handleSubmit} className="w-[90%] flex flex-col bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
                             <h1 className=" text-center py-5 mx-auto text-3xl text-blue-800">
                                 Welcome to
-                                <span className={`${stlye.logo} h-[10vh] inline-block align-middle`}></span>onnectify
+                                <span className='inline-block' >
+                                    <span className={`${stlye.logo} h-[10vh] inline-block align-middle max-[400px]: `}></span>onnectify
+                                </span>
                             </h1>
 
                             {/* <!-- Email --> */}
@@ -121,9 +121,8 @@ const Signin = () => {
                         </form>
                     </div>
 
-             
+
                 </div>
-            </div>
         </section>
 
     );
