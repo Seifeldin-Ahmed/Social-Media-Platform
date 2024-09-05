@@ -46,19 +46,23 @@ const NewPassword = () => {
     return (
         <section className={`${stlye.bgimg} h-[100vh] bg-[#fff]`}>
             <div className="flex h-full justify-center items-center">
-                <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col bg-[#481a5b] shadow-lg p-5 rounded-lg">
-                    {/* Email */}
+            <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col justify-center items-center bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
+            {/* Email */}
                     <div className="mb-5 w-full">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-                            Your email
+                        <label className="block text-2xl font-medium text-blue-800">
+                            Set a New Password
+                            <span className={`${stlye.logo} h-[10vh] inline-block align-middle`}></span><span className='text-3xl font-medium text-blue-800'>onnectify</span>
                         </label>
+                        <div className="block mb-2 text-sm font-medium text-blue-900">
+                            You’re almost done! Please enter and confirm your new password below. Once you’ve updated your password, you’ll be able to log in with your new credentials.
+                        </div>
                         <input
-                            type="email"
+                            type="hidden"
                             id="email"
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                             placeholder="Email"
                             disabled
                         />
@@ -69,16 +73,13 @@ const NewPassword = () => {
 
                     {/* Password */}
                     <div className="mb-5 w-full">
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
-                            Your password
-                        </label>
                         <input
                             type="password"
                             id="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                             placeholder="Your password"
                         />
                         {formik.touched.password && formik.errors.password ? (
@@ -88,16 +89,13 @@ const NewPassword = () => {
 
                     {/* Confirm Password */}
                     <div className="mb-5 w-full">
-                        <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-white">
-                            Confirm Password
-                        </label>
                         <input
                             type="password"
                             id="confirmPassword"
                             value={formik.values.confirmPassword}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                             placeholder="Confirm Password"
                         />
                         {formik.touched.confirmPassword && formik.errors.confirmPassword ? (

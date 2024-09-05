@@ -31,22 +31,24 @@ const VerifyCode = () => {
     return (
         <section className={`${stlye.bgimg} h-[100vh] bg-[#fff]`}>
             <div className="container mx-auto h-full flex justify-center items-center">
-                <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col bg-[#481a5b] shadow-lg p-5 rounded-lg">
+                <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col justify-center items-center bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
                     {/* <!-- Email --> */}
                     <div className="mb-5 w-full">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-                            Your email
+                        <label className="block text-3xl font-medium text-blue-800">
+                            Enter the code
+                            <span className={`${stlye.logo} h-[10vh] inline-block align-middle`}></span>onnectify
                         </label>
+                        <p className="block text-sm font-medium text-blue-900">We have sent a verification code to the email address you provided {formik.values.email} </p>
+                        <p className="block text-sm font-medium text-blue-900"> Please enter the code below to verify your email and proceed with resetting your password.</p>
                         <input
-                            type="email"
+                            type="hidden"
                             id="email"
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                             placeholder="Email"
                             disabled
-
                         />
                         {formik.touched.email && formik.errors.email ? (
                             <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
@@ -55,9 +57,6 @@ const VerifyCode = () => {
 
                     {/* <!-- Reset Code --> */}
                     <div className="mb-5 w-full">
-                        <label htmlFor="resetCode" className="block mb-2 text-sm font-medium text-white">
-                            Your Code
-                        </label>
                         <input
                             type="text"
                             id="resetCode"
@@ -65,14 +64,16 @@ const VerifyCode = () => {
                             value={formik.values.resetCode}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                             placeholder="Your code"
                         />
                         {formik.touched.resetCode && formik.errors.resetCode ? (
                             <div className="text-red-500 text-sm mt-1">{formik.errors.resetCode}</div>
                         ) : null}
                     </div>
-
+                    <div className="block mb-5 text-sm font-medium text-blue-900">
+                        Note: The verification code is time-sensitive and expires in 10 mins.
+                    </div>
                     {/* <!-- Submit Button --> */}
                     <button
                         type="submit"

@@ -38,19 +38,21 @@ const ForgetPassword = () => {
     return (
         <section className={`${stlye.bgimg} h-[100vh] bg-[#fff]`}>
             <div className="container mx-auto flex justify-center items-center h-full">
-                <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col justify-center items-center bg-[#481a5b] shadow-lg p-5 rounded-lg">
+                <form onSubmit={formik.handleSubmit} className="w-[40%] flex flex-col justify-center items-center bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
                     {/* <!-- Email --> */}
                     <div className="mb-5 w-full ">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-                            Your email
+                        <label className="block text-2xl font-medium text-blue-800">
+                            Forgot Your Password?
+                            <span className={`${stlye.logo} h-[10vh] inline-block align-middle`}></span><span className='text-3xl font-medium text-blue-800'>onnectify</span>
                         </label>
+                        <div className="block mb-2 text-sm font-medium text-blue-900">If you've forgotten your password, no worries! Just enter your email address below, and we’ll send you a verification code to help you reset it.</div>
                         <input
                             type="email"
                             id="email"
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                            className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full"
                             placeholder="Email"
                         />
                         {formik.touched.email && formik.errors.email ? (
@@ -66,7 +68,7 @@ const ForgetPassword = () => {
                         Submit
                     </button>
                     <Link
-                        className="w-full mb-5 bg-[#888f93] text-white hover:bg-[#b3d0d7] focus:ring-4 focus:outline-none focus:ring-[#ba87fe] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
+                        className="w-full mb-5 bg-blue-800 text-white hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-[#ba87fe] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
                         to="/signin"
                     >
                         Back

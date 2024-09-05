@@ -50,13 +50,16 @@ const Signin = () => {
             <div className="container mx-auto h-full">
                 <div className="flex flex-col lg:flex-row justify-between h-full">
                     {/* <!-- Left Side: Form --> */}
-                    <div className="w-full lg:w-[50%] flex items-center justify-center h-full">
-                        <form onSubmit={formik.handleSubmit} className="w-[70%] flex flex-col bg-[#481a5b] shadow-lg p-5 rounded-lg">
-                            <h1 className="text-center text-3xl py-5 text-[#ba87fe]">Welcome To Connectify</h1>
+                    <div className="w-full lg:w-[50%] flex items-center justify-start h-full">
+                        <form onSubmit={formik.handleSubmit} className="w-[70%] flex flex-col bg-[#ffffff] shadow-2xl  drop-shadow-xl p-5 rounded-lg">
+                            <h1 className=" text-center py-5 mx-auto text-3xl text-blue-800">
+                                Welcome to
+                                <span className={`${stlye.logo} h-[10vh] inline-block align-middle`}></span>onnectify
+                            </h1>
 
                             {/* <!-- Email --> */}
                             <div className="mb-5 w-full">
-                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-blue-800">
                                     Your email
                                 </label>
                                 <input
@@ -66,7 +69,7 @@ const Signin = () => {
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                    className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                                     placeholder="Email"
                                     aria-label="Email"
                                 />
@@ -77,7 +80,7 @@ const Signin = () => {
 
                             {/* <!-- Password --> */}
                             <div className="mb-5 w-full">
-                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-blue-800">
                                     Your password
                                 </label>
                                 <input
@@ -87,7 +90,7 @@ const Signin = () => {
                                     value={formik.values.password}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="shadow-sm bg-[#481a5b] border border-[#16d6ff] text-white text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
+                                    className="shadow-sm bg-[#e2eefc] border border-[#16d6ff] text-blue-900 text-sm rounded-lg focus:ring-[#4778ff] focus:border-[#4778ff] block w-full p-2.5"
                                     placeholder="Your password"
                                     aria-label="Password"
                                 />
@@ -99,18 +102,18 @@ const Signin = () => {
                             {/* <!-- Submit Button --> */}
                             <button
                                 type="submit"
-                                className="w-full mb-5 bg-[#4778ff] text-white hover:bg-[#16d6ff] focus:ring-4 focus:outline-none focus:ring-[#ba87fe] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
+                                className="w-full mb-5 bg-[#4778ff] text-white hover:bg-[#16d6ff] focus:ring-4 focus:outline-none focus:ring-[#4778ff] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
                                 disabled={formik.isSubmitting || !formik.isValid}
                             >
                                 Login
                             </button>
 
-                            <Link className="text-[#16d6ff] text-center pb-10 border-b border-[#ba87fe]" to="/forgetpassword">
+                            <Link className="text-blue-900 text-center pb-10" to="/forgetpassword">
                                 Forget Password?
                             </Link>
 
                             <Link
-                                className="text-white w-full mb-5 bg-[#ba87fe] hover:bg-[#16d6ff] focus:ring-4 focus:outline-none focus:ring-[#4778ff] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
+                                className="text-white w-full mb-5 bg-blue-800 hover:bg-[#16d6ff] focus:ring-4 focus:outline-none focus:ring-[#4778ff] font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto"
                                 to="/signup"
                             >
                                 Create New Account
