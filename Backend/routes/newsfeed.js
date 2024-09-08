@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {body} = require('express-validator');
 const newsfeedController = require('../controllers/newsfeed');
 const isAuth = require('../middleware/is_auth');
 
@@ -13,4 +12,4 @@ router.put('/post/:postId', isAuth, newsfeedController.updatePost);
 router.delete('/post/:postId', isAuth, newsfeedController.deletePost);
 
 
-exports.module = router;
+module.exports = router;
