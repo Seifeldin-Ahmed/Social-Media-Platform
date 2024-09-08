@@ -61,7 +61,7 @@ exports.login = async (req, res, next) => {
         }
         const email = req.body.email;
         const password = req.body.password;
-        const user = await User.findOne({ email: email })
+        const user = await User.findOne({ email: email });
         if (!user) {
             const error = new Error('A user with this email could not be found');
             error.statusCode = 401; // not authenticated
@@ -74,7 +74,7 @@ exports.login = async (req, res, next) => {
             throw error;
         }
         const token = jwt.sign({ email: user.email, userId: user._id.toString() }, 'strongsupersupersecretsecret');
-        res.status(200).json({ message: 'login successfully', token: token, userId: user._id.toString() });
+        res.status(200).json({ message: 'login successfully', token: token, user: {_id: user._id.toString(), firstName: user.firstName, lastName: user.lastName, ProfilePic: user.ProfilePic, following: user.following, followers: user.followers} });
     }
     catch (err) {
         if (!err.statusCode) {

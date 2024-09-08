@@ -4,7 +4,10 @@ const bodyParser = require('body-parser');
 const mongoose =  require('mongoose');
 const multer = require('multer');
 const authRoutes = require('./routes/auth');
-
+const newsfeedRoutes = require('./routes/newsfeed');
+const likesRoutes = require('./routes/likes');
+const commentsRoutes = require('./routes/comments');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -38,6 +41,10 @@ app.use((req, res, next) => { //solve CORS Problem
 }); 
 
 app.use(authRoutes);
+app.use('/newsfeed', newsfeedRoutes);
+app.use(likesRoutes);
+app.use(commentsRoutes);
+app.use(userRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
